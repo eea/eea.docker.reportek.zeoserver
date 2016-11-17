@@ -1,5 +1,5 @@
 FROM eeacms/centos:7s
-MAINTAINER "Alin Voinea" <alin.voinea@eaudeweb.ro>
+MAINTAINER "Olimpiu Rob" <olimpiu.rob@eaudeweb.ro>
 
 ENV ZEO_HOME=/opt/zeoserver \
     ZEO_USERNAME=zope-www   \

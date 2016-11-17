@@ -1,5 +1,5 @@
 zeoserver:
-  image: eeacms/zeoserver
+  image: eeacms/reportek.zeoserver
   ports:
   - "8100:8100"
   volumes_from:
