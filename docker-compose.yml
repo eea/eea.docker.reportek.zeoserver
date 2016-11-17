@@ -1,0 +1,17 @@
+zeoserver:
+  image: eeacms/zeoserver
+  ports:
+  - "8100:8100"
+  volumes_from:
+  - data
+#  environment:
+#    BUILDOUT_EGGS: ZopeUndo zc.async
+
+data:
+  image: busybox
+  tty: true
+  stdin_open: true
+  volumes:
+  - /opt/zeoserver/var/filestorage
+  - /opt/zeoserver/var/blobstorage
+  command: ["chown", "-v", "-R", "500:500", "/opt/zeoserver/var"]
