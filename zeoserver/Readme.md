@@ -170,6 +170,9 @@ in `BUILDOUT_EGGS="zc.async ZopeUndo"`.
 Besides the variables supported by the `zeoserver` recipe, you can also use `INDEX` and `FIND_LINKS`
 that extend the `[buildout]` tag.
 
+You can override the default `ZEO_USERNAME` of `zope-www` and you can also pass the `ZEO_UID` and
+`ZEO_GID` of the user running the zeo process, default is `500`.
+
 ## Copyright and license
 
 The Initial Owner of the Original Code is European Environment Agency (EEA).
