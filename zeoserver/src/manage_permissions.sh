@@ -28,5 +28,15 @@ if [ -z "$(getent group $ZEO_GID)" ]; then
 fi
 
 if [ "$(stat -c %U $ZEO_HOME)" != "$ZEO_USERNAME" ] || [ "$(stat -c %G $ZEO_HOME)" != "$ZEO_USERNAME" ]; then
-  find . -not -iwholename './var/blobstorage*' -not -iwholename './var/filestorage*' -exec chown $ZEO_USERNAME:$ZEO_USERNAME '{}' \;
+  chown $ZEO_USERNAME:$ZEO_USERNAME \
+           /opt/zeoserver           \
+           /opt/zeoserver/*         \
+           /opt/zeoserver/.[^.]*    \
+           /opt/zeoserver/var/
+  chown -R $ZEO_USERNAME:$ZEO_USERNAME \
+           /opt/zeoserver/bin          \
+           /opt/zeoserver/develop-eggs \
+           /opt/zeoserver/eggs         \
+           /opt/zeoserver/parts        \
+           /opt/zeoserver/var/log
 fi
