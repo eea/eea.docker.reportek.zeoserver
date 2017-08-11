@@ -13,7 +13,7 @@ your non-related EEA projects.
 
 ### Base docker image
 
- - [hub.docker.com](https://registry.hub.docker.com/u/eeacms/zeoserver)
+ - [hub.docker.com](https://registry.hub.docker.com/u/eeacms/reportek.zeoserver)
 
 
 ### Source code
@@ -34,7 +34,7 @@ recipe package so it is advised that you check it out.
 
 ### Run with basic configuration
 
-    $ docker run eeacms/zeoserver
+    $ docker run eeacms/reportek.zeoserver
 
 The image is built using a bare `buildout.cfg` file:
 
@@ -56,11 +56,11 @@ by the recipe, such as listening on `port 8100`.
 
 Environment variables can be supplied either via an `env_file` with the `--env-file` flag
     
-    $ docker run --env-file zeoserver.env eeacms/zeoserver
+    $ docker run --env-file zeoserver.env eeacms/reportek.zeoserver
 
 or via the `--env` flag
 
-    $ docker run --env BUILDOUT_ZEO_ADDRESS="80" eeacms/zeoserver
+    $ docker run --env BUILDOUT_ZEO_ADDRESS="80" eeacms/reportek.zeoserver
 
 It is **very important** to know that the environment variables supplied are translated
 into buildout configuration. For each variable with the prefix `BUILDOUT_` there will be
@@ -82,7 +82,7 @@ a rebuild at start and might cause a few seconds of delay.
 
 ### Use a custom configuration file mounted as a volume
 
-    $ docker run -v /host/path/to/buildout.cfg:/opt/zeoserver/buildout.cfg eeacms/zeoserver
+    $ docker run -v /host/path/to/buildout.cfg:/opt/zeoserver/buildout.cfg eeacms/reportek.zeoserver
 
 You are able to start a container with your custom `buildout` configuration with the mention
 that it must be mounted at `/opt/zeoserver/buildout.cfg` inside the container. Keep in mind
@@ -96,7 +96,7 @@ have to be reinstalled every time a container is created.
 Additionally, in case you need to considerably change the base configuration of this image,
 you can extend it with your configuration. You can write Dockerfile like this
 
-    FROM eeacms/zeoserver
+    FROM eeacms/reportek.zeoserver
 
     COPY custom.cfg /opt/zeoserver/base.cfg
     RUN bin/buildout -c base.cfg
@@ -128,7 +128,7 @@ The parent directory of the `Data.fs` file is mounted as a `read-only` volume in
 The `data` container must have this directory marked as a volume, so it can be used by the `zeoserver` container,
 with a command like:
 
-    $ docker run --volumes-from my_data_container eeacms/zeoserver
+    $ docker run --volumes-from my_data_container eeacms/reportek.zeoserver
 
 The volumes from the `data` container will overwrite the contents of the directories inside the `zeoserver`
 container, in a similar way in which the `mount` command works. So, for example, if your data container
@@ -142,7 +142,7 @@ The data container can also be easily [copied, moved and be reused between diffe
 A `docker-compose.yml` file for `zeoserver` using a `data` container:
 
     zeoserver:
-      image: eeacms/zeoserver
+      image: eeacms/reportek.zeoserver
       volumes_from:
       - data
 
@@ -155,7 +155,7 @@ A `docker-compose.yml` file for `zeoserver` using a `data` container:
 
 ## Upgrade
 
-    $ docker pull eeacms/zeoserver
+    $ docker pull eeacms/reportek.zeoserver
 
 
 ## Supported environment variables ##

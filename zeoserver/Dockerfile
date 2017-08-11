@@ -13,15 +13,11 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4
     && gpg --verify /usr/local/bin/gosu.asc \
     && rm /usr/local/bin/gosu.asc \
     && rm -r /root/.gnupg/ \
-    && chmod +x /usr/local/bin/gosu
+    && chmod +x /usr/local/bin/gosu \
+    && mkdir -p $ZEO_HOME
 
-RUN mkdir -p $ZEO_HOME
-
-COPY src/base.cfg                 $ZEO_HOME/base.cfg
-COPY src/bootstrap.py             $ZEO_HOME/
-COPY src/configure.py             /configure.py
-COPY src/manage_permissions.sh    /manage_permissions.sh
-COPY src/entrypoint.sh            /entrypoint.sh
+COPY src/base.cfg src/bootstrap.py  $ZEO_HOME/
+COPY docker-configure.py docker-manage-permissions.sh docker-entrypoint.sh /
 
 WORKDIR $ZEO_HOME
 
@@ -33,4 +29,5 @@ RUN python bootstrap.py -v 2.2.1 --setuptools-version=7.0 -c base.cfg && \
 
 VOLUME $ZEO_HOME/var/
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["start"]
