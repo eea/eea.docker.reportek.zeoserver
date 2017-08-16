@@ -17,7 +17,7 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4
     && mkdir -p $ZEO_HOME
 
 COPY src/base.cfg src/bootstrap.py  $ZEO_HOME/
-COPY docker-configure.py docker-manage-permissions.sh docker-entrypoint.sh /
+COPY docker-manage-permissions.sh docker-entrypoint.sh docker-initialize.py /
 
 WORKDIR $ZEO_HOME
 

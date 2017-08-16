@@ -52,44 +52,6 @@ The image is built using a bare `buildout.cfg` file:
 `zeoserver` will therefore run inside the container with the default parameters given
 by the recipe, such as listening on `port 8100`.
 
-### Extend configuration through environment variables
-
-Environment variables can be supplied either via an `env_file` with the `--env-file` flag
-    
-    $ docker run --env-file zeoserver.env eeacms/reportek.zeoserver
-
-or via the `--env` flag
-
-    $ docker run --env BUILDOUT_ZEO_ADDRESS="80" eeacms/reportek.zeoserver
-
-It is **very important** to know that the environment variables supplied are translated
-into buildout configuration. For each variable with the prefix `BUILDOUT_` there will be
-a line added to the `[zeoserver]` configuration. For example, if you want to set the
-`read-only` attribute to the value `true`, you have to supply an environment variable
-in the form `BUILDOUT_READ_ONLY="true"`. When the environment variable is processed,
-the prefix is striped, `_` turns to `-` and uppercase turns to lowercase. Also, if the
-value is enclosed in quotes or apostrophes, they will be striped. The configuration will
-look like
-
-    [zeoserver]
-    ...
-    read-only = true
-    ...
-
-The variables supported are the ones supported by the [recipe](https://pypi.python.org/pypi/plone.recipe.zeoserver),
-so check out its documentation for a full list. Keep in mind that this option will trigger
-a rebuild at start and might cause a few seconds of delay.
-
-### Use a custom configuration file mounted as a volume
-
-    $ docker run -v /host/path/to/buildout.cfg:/opt/zeoserver/buildout.cfg eeacms/reportek.zeoserver
-
-You are able to start a container with your custom `buildout` configuration with the mention
-that it must be mounted at `/opt/zeoserver/buildout.cfg` inside the container. Keep in mind
-that this option will trigger a rebuild at start and might cause delay, based on your
-configuration. It is unadvised to use this option to install many packages, because they will
-have to be reinstalled every time a container is created.
-
 
 ### Extend the image with a custom configuration file
 
@@ -160,18 +122,9 @@ A `docker-compose.yml` file for `zeoserver` using a `data` container:
 
 ## Supported environment variables ##
 
-As mentioned above, the supported environment variables are derived from the configuration options
-from the [recipe](https://pypi.python.org/pypi/plone.recipe.zeoserver). For example, `read-only`
-becomes `BUILDOUT_READ_ONLY` and `zeo-address` becomes `BUILDOUT_ZEO_ADDRESS`.
-
-For variables that support a list of values (such as `eggs`, for example), separe them by space, as
-in `BUILDOUT_EGGS="zc.async ZopeUndo"`.
-
-Besides the variables supported by the `zeoserver` recipe, you can also use `INDEX` and `FIND_LINKS`
-that extend the `[buildout]` tag.
-
 You can override the default `ZEO_USERNAME` of `zope-www` and you can also pass the `ZEO_UID` and
 `ZEO_GID` of the user running the zeo process, default is `500`.
+You can also specify if zeopack should keep the Data.fs.old and blobstorage.old when packing with `ZEO_PACK_KEEP_OLD`, default is `true`.
 
 ## Copyright and license
 

@@ -10,6 +10,8 @@ if [ -z "$HEALTH_CHECK_INTERVAL" ]; then
   HEALTH_CHECK_INTERVAL=1
 fi
 
+python /docker-initialize.py
+
 if [[ $START == *"$1"* ]]; then
     _stop() {
         $CMD stop
@@ -17,14 +19,6 @@ if [[ $START == *"$1"* ]]; then
     }
 
     trap _stop SIGTERM SIGINT
-
-    if ! test -e $ZEO_HOME/buildout.cfg; then
-        python /docker-configure.py
-    fi
-
-    if test -e $ZEO_HOME/buildout.cfg; then
-        $ZEO_HOME/bin/buildout -c $ZEO_HOME/buildout.cfg
-    fi
 
     source /docker-manage-permissions.sh; sync;
 
