@@ -3,6 +3,11 @@ set -e
 set -x
 
 DEFAULT_ZEO_USER="zope-www"
+DEFAULT_ZEO_HOME="/opt/zeoserver"
+
+if [ -z "$ZEO_HOME" ]; then
+  export ZEO_HOME=$DEFAULT_ZEO_HOME
+fi
 
 if [ -z "$ZEO_USERNAME" ]; then
   export ZEO_USERNAME=$DEFAULT_ZEO_USER
