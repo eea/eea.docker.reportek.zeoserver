@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+set -x
+
 START="start"
 CMD="bin/zeoserver"
 if [ -z "$HEALTH_CHECK_TIMEOUT" ]; then
