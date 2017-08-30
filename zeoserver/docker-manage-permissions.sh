@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-set -x
 
 DEFAULT_ZEO_USER="zope-www"
 DEFAULT_ZEO_HOME="/opt/zeoserver"

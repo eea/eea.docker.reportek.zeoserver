@@ -1,6 +1,5 @@
 #!/plone/instance/bin/python
 
-import re
 import os
 
 
@@ -35,11 +34,13 @@ class Environment(object):
 
     __call__ = setup
 
+
 def initialize():
     """ Configure ZEOSERVER
     """
     environment = Environment()
     environment.setup()
+
 
 if __name__ == "__main__":
     initialize()
