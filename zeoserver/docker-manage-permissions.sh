@@ -32,6 +32,15 @@ if [ -z "$(getent group $ZEO_GID)" ]; then
     groupmod -g $ZEO_GID $ZEO_USERNAME
 fi
 
+if [ "$(stat -c %G /data/filestorage)" != "$ZEO_USERNAME" ] || [ "$(stat -c %G /data/blobstorage)" != "$ZEO_USERNAME" ]; then
+  chown $ZEO_USERNAME:$ZEO_USERNAME \
+          /data/filestorage         \
+          /data/blobstorage
+  chown -R $ZEO_USERNAME:$ZEO_USERNAME \
+          /data/filestorage            \
+          /data/blobstorage
+fi
+
 if [ "$(stat -c %U $ZEO_HOME)" != "$ZEO_USERNAME" ] || [ "$(stat -c %G $ZEO_HOME)" != "$ZEO_USERNAME" ]; then
   chown $ZEO_USERNAME:$ZEO_USERNAME \
            /opt/zeoserver           \
