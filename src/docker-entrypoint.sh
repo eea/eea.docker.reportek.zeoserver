@@ -41,13 +41,14 @@ setup_permissions() {
             groupmod -g $ZEO_GID $ZEO_USER 2>/dev/null || true
         fi
 
-        # Ensure proper ownership of var directory
-        # Chown only the blobstorage and filestorage natively
-        mkdir -p $ZEO_DATA_DIR/blobstorage $ZEO_DATA_DIR/filestorage
+        # Ensure proper ownership of data directory if running as root
         chown -R $ZEO_UID:$ZEO_GID $ZEO_DATA_DIR
     else
         log "Running as non-root user. Skipping usermod and chown."
     fi
+
+    # Always ensure the required data subdirectories exist
+    mkdir -p $ZEO_DATA_DIR/blobstorage $ZEO_DATA_DIR/filestorage
 }
 
 # ============================================================================

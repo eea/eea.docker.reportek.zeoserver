@@ -38,6 +38,7 @@ FROM dhi.io/python:${PYTHON_VERSION}-${DEBIAN_VERSION}-dev AS runtime
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     ZEO_HOME=/opt/zeo \
+    ZEO_DATA_DIR=/data \
     ZEO_UID=1000 \
     ZEO_GID=1000 \
     PATH="/opt/zeo/bin:$PATH"
@@ -50,9 +51,11 @@ RUN apt-get update && \
     netcat-openbsd && \
     rm -rf /var/lib/apt/lists/*
 
-# Create zeo user
+# Create zeo user and data directory
 RUN groupadd -g ${ZEO_GID} zeo && \
-    useradd -g ${ZEO_GID} -u ${ZEO_UID} -m -s /bin/bash zeo
+    useradd -g ${ZEO_GID} -u ${ZEO_UID} -m -s /bin/bash zeo && \
+    mkdir -p ${ZEO_DATA_DIR} && \
+    chown -R ${ZEO_UID}:${ZEO_GID} ${ZEO_DATA_DIR}
 
 # Copy built environment and configurations
 COPY --from=builder --chown=${ZEO_UID}:${ZEO_GID} $ZEO_HOME $ZEO_HOME
