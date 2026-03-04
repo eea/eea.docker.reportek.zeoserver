@@ -26,9 +26,7 @@ RUN uv pip install --python=$ZEO_HOME/bin/python -r $ZEO_HOME/requirements.txt
 
 # Create necessary directories
 RUN mkdir -p $ZEO_HOME/etc \
-    $ZEO_HOME/var/filestorage \
-    $ZEO_HOME/var/blobstorage \
-    $ZEO_HOME/var/log
+    $ZEO_HOME/var
 
 # ============================================================================
 # Runtime Stage - Minimal image for production
