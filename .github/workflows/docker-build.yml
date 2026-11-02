@@ -4,8 +4,10 @@ on:
   push:
     branches:
       - z5
+      - master
     tags:
       - 'z5-*'
+      - '[0-9]*'
   workflow_dispatch:
 
 env:
@@ -28,9 +30,11 @@ jobs:
         with:
           images: ${{ env.DOCKER_IMAGE }}
           tags: |
+            # On master branch push: tag as latest
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
             # On z5 branch push: tag as z5-latest
             type=raw,value=z5-latest,enable=${{ github.ref == 'refs/heads/z5' }}
-            # On z5-* tag push: use the git tag as-is (e.g. z5-1.0)
+            # On tag push: use the git tag as-is (e.g. 6.3-1)
             type=ref,event=tag
             # On z5-* tag push: also tag as z5-latest
             type=raw,value=z5-latest,enable=${{ startsWith(github.ref, 'refs/tags/z5-') }}
